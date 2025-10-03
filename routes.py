@@ -8,13 +8,16 @@ from sqlalchemy import or_
 
 main_bp = Blueprint("main", __name__)
 
+
 # =====================
 #  Блог
 # =====================
-@main_bp.route("/blod", methods=["GET"])
+@main_bp.route("/blog", methods=["GET"])
 def blog():
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.created_at.desc()).all()  # якщо є поле created_at
     return render_template("blog.html", posts=posts)
+
+
 
 # =====================
 #  Реєстрація
@@ -192,13 +195,12 @@ def like_post(post_id):
     post = Post.query.get_or_404(post_id)
 
     if current_user in post.likes:
-        post.likes.remove(current_user)  # якщо вже лайкнув → забираємо
+        post.likes.remove(current_user)
     else:
-        post.likes.append(current_user)  # якщо ще не лайкав → додаємо
+        post.likes.append(current_user)
 
     db.session.commit()
-    return redirect(url_for("main.post", post_id=post.id))
-
+    return redirect(url_for("main.post_detail", post_id=post.id))
 # =====================
 # Коментарі
 # =====================

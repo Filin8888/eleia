@@ -1,24 +1,43 @@
 # admin.py
 from flask_admin import Admin, AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
-from flask import redirect, url_for
+from flask_admin.menu import MenuLink
+from flask import redirect, url_for, request
+from flask_login import current_user
 from models import User, Post
 from extentions import db
 
+
 class MyAdminIndexView(AdminIndexView):
-    @expose('/')
-    def index(self):
-        return redirect(url_for('main.index'))
-    
+    def is_accessible(self):
+        return current_user.is_authenticated and getattr(current_user, "role", None) == "admin"
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for("main.login", next=request.url))
 
 
+class SecureModelView(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated and getattr(current_user, "role", None) == "admin"
 
-admin = Admin(name="Forum Admin", template_mode="bootstrap4", index_view=MyAdminIndexView())
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for("main.login", next=request.url))
+
+
+admin = Admin(name="Адмінка", template_mode="bootstrap4", index_view=MyAdminIndexView(url="/admin"))
+
 
 def init_admin(app):
     admin.init_app(app)
 
     # додаємо моделі
-    admin.add_view(ModelView(User, db.session))
-    admin.add_view(ModelView(Post, db.session))
+    admin.add_view(SecureModelView(User, db.session, category="Models"))
+    admin.add_view(SecureModelView(Post, db.session, category="Models"))
 
+    # Простий і робочий варіант: додаємо статичне посилання на /blog
+    # (це не вимагає app_context та працює одразу)
+    admin.add_link(MenuLink(name="На сайт", url="/blog"))
+
+    # АЛЬТЕРНАТИВА (якщо потрібен url_for, наприклад через префікси blueprint):
+    # with app.app_context():
+    #     admin.add_link(MenuLink(name="На сайт", url=url_for("main.blog")))

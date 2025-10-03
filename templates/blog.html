@@ -1,15 +1,27 @@
+
 {% extends "base.html" %}
-
-{% block title %}Блог - Eleia School{% endblock %}
-
 {% block content %}
-<h1>Блог Eleia School</h1>
+<div class="blog-container">
 
-<div class="blog-post">
-    <h2>Назва новини</h2>
-    <div class="image-placeholder">[Місце для зображення]</div>
-    <p>Текст новини з сайту…</p>
+    <h1>Блог</h1>
+
+    <!-- Якщо користувач авторизований -->
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('main.create_post') }}" class="btn btn-primary">+ Новий пост</a>
+    {% endif %}
+
+    <hr>
+
+    <!-- Список постів -->
+    {% for post in posts %}
+        <div class="post-card">
+            <h2><a href="{{ url_for('main.post_detail', post_id=post.id) }}">{{ post.title }}</a></h2>
+            <p>{{ post.content[:200] }}...</p>
+            <small>Автор: {{ post.author.username }}</small>
+        </div>
+    {% else %}
+        <p>Поки що немає постів.</p>
+    {% endfor %}
+
 </div>
-
-<!-- Повторювати для кожної новини -->
 {% endblock %}

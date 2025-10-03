@@ -6,14 +6,14 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
-    color: #333;
+    color: #768100;
 }
 
 /* ===================== */
 /* Хедер і навігація */
 /* ===================== */
 header {
-    background-color: #004080; /* темно-синій */
+    background-color: #768100; 
     color: white;
     padding: 15px 30px;
 }
@@ -161,3 +161,107 @@ footer {
     margin-top: 40px;
     font-size: 0.9rem;
 }
+
+
+
+.blog-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.btn {
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn-primary {
+    background: #007bff;
+}
+
+.btn-success {
+    background: #28a745;
+}
+
+.btn-secondary {
+    background: #6c757d;
+}
+
+.post-card {
+    background: #f9f9f9;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.footer {
+    background-color: #f3eee3; /* світло-бежевий як на скріншоті */
+    padding: 40px 60px;
+    margin-top: 50px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    color: #333;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+    flex: 1;
+    min-width: 250px;
+    margin: 10px;
+}
+
+.footer-logo {
+    width: 120px;
+    height: 70px;
+    border: 1px solid #333;
+    margin-bottom: 15px;
+}
+
+.footer h4 {
+    font-weight: bold;
+    margin: 15px 0 10px;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer ul li {
+    margin-bottom: 8px;
+}
+
+.footer ul li a,
+.footer p,
+.footer a {
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.icon {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #333;
+}
+
+

@@ -1,28 +1,120 @@
+<!-- base.html -->
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Eleia School{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %}Eleia{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Якщо використовуєш Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('index') }}">Головна</a></li>
-                <li><a href="{{ url_for('about') }}">Про заклад</a></li>
-                <li><a href="{{ url_for('main.blog') }}">Блог</a></li>
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{{ url_for('index') }}">Eleia</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">Про нас</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.blog') }}">Блог</a></li>
+                </ul>
+
+                <!-- Права частина меню -->
+                <ul class="navbar-nav ml-auto">
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.profile', user_id=current_user.id) }}">
+                                Профіль
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.logout') }}">Вийти</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.login') }}">Увійти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('main.register') }}">Зареєструватися</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
         </nav>
     </header>
 
     <main>
-        {% block content %}{% endblock %}
+        <div class="container mt-4">
+            {% block content %}{% endblock %}
+        </div>
     </main>
 
-    <footer>
-        <p>© Eleia School</p>
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="footer-logo"></div>
+                <p>Кам’янець-Подільська приватна християнська гімназія «ЕЛЕЯ»</p>
+            </div>
+
+            <div class="footer-center">
+                <h4>Про заклад</h4>
+                <ul>
+                    <li><a href="#">Презентація гімназії</a></li>
+                    <li><a href="#">Вимоги вступу</a></li>
+                </ul>
+
+                <h4>Навчання</h4>
+                <ul>
+                    <li><a href="#">Початкова школа</a></li>
+                    <li><a href="#">Гімназія</a></li>
+                    <li><a href="#">Online навчання</a></li>
+                    <li><a href="#">IT академія</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-right">
+                <h4>Контакти</h4>
+                <p>вул. Лесі Українки 85, м. Кам’янець-Подільський<br>Хмельницька область, 32313</p>
+                <p><a href="mailto:eleiia.kp@gmail.com">eleiia.kp@gmail.com</a></p>
+                <p><a href="mailto:g-m-v@i.ua">g-m-v@i.ua</a></p>
+                <p><a href="tel:+380963976249">+38 096 397 62 49</a></p>
+
+                <div class="social-icons">
+                    <a href="#"><div class="icon"></div></a>
+                    <a href="#"><div class="icon"></div></a>
+                    <a href="#"><div class="icon"></div></a>
+                    <a href="#"><div class="icon"></div></a>
+                </div>
+            </div>
+        </div>
     </footer>
+       
 </body>
+    
 </html>
+
+<style>
+    html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1; /* займає весь вільний простір */
+}
+
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+</style>
+
