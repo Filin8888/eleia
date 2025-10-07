@@ -6,6 +6,25 @@ from flask import redirect, url_for, request
 from flask_login import current_user
 from models import User, Post
 from extentions import db
+# from flask_admin.form import FileUploadField
+# from flask_admin.form.upload import ImageUploadInput
+# import os
+# from flask import current_app
+
+# class PostAdminView(SecureModelView):
+#     # вказуємо, які поля будуть відображатися у формі
+#     form_columns = ['title', 'content', 'image_filename', 'user']
+
+#     # замість "image_filename" будемо використовувати FileUploadField
+#     form_extra_fields = {
+#         'image_filename': FileUploadField(
+#             'Зображення',
+#             base_path=os.path.join(current_app.root_path, 'static/uploads'),
+#             allow_overwrite=True,
+#             namegen=lambda obj, file_data: secure_filename(file_data.filename)
+#         )
+#     }
+
 
 
 class MyAdminIndexView(AdminIndexView):

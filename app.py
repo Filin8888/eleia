@@ -3,6 +3,10 @@ from config import Config
 from flask_login import LoginManager
 from extentions import db
 from admin import init_admin
+from flask_migrate import Migrate
+
+
+
 
 login_manager = LoginManager()  # створюємо менеджер логіну
 
@@ -38,6 +42,10 @@ def create_app():
 
     # підключаємо адмінку
     init_admin(app)
+
+    # ✅ ініціалізація Flask-Migrate
+    migrate = Migrate(app, db)
+
 
 
 

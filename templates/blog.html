@@ -1,27 +1,36 @@
-
 {% extends "base.html" %}
 {% block content %}
 <div class="blog-container">
 
     <h1>Блог</h1>
 
-    <!-- Якщо користувач авторизований -->
-    {% if current_user.is_authenticated %}
+    {% if current_user.role in ['admin', 'moderator'] %}
         <a href="{{ url_for('main.create_post') }}" class="btn btn-primary">+ Новий пост</a>
     {% endif %}
 
     <hr>
 
     <!-- Список постів -->
+    <div class="posts-grid">
     {% for post in posts %}
         <div class="post-card">
-            <h2><a href="{{ url_for('main.post_detail', post_id=post.id) }}">{{ post.title }}</a></h2>
-            <p>{{ post.content[:200] }}...</p>
-            <small>Автор: {{ post.author.username }}</small>
+            {% set main_image = post.images|selectattr('is_main')|list %}
+            {% if main_image %}
+                <div class="post-image">
+                    <img src="{{ url_for('static', filename='uploads/' ~ main_image[0].filename) }}">
+                </div>
+            {% endif %}
+            <div class="post-content">
+                <h2><a href="{{ url_for('main.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                <p>{{ post.content[:200] ~ ('...' if post.content|length > 200 else '') }}</p>
+                <small>Автор: {{ post.user.username }}</small>
+            </div>
         </div>
     {% else %}
         <p>Поки що немає постів.</p>
     {% endfor %}
+    </div>
 
 </div>
 {% endblock %}
+

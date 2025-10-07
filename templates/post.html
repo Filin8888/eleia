@@ -5,6 +5,21 @@
 <article class="post-card">
   <h2>{{ post.title }}</h2>
   <p class="meta">Автор: {{ post.author.username }} · {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+
+{% set main_image = post.images|selectattr('is_main')|list %}
+{% if main_image %}
+  <div class="main-image">
+    <img src="{{ url_for('static', filename='uploads/' ~ main_image[0].filename) }}">
+  </div>
+{% endif %}
+
+
+  <div class="gallery">
+  {% for img in post.images %}
+    <img class="thumb" src="{{ url_for('static', filename='uploads/' ~ img.filename) }}">
+  {% endfor %}
+  </div>
+
   <div class="body">{{ post.content }}</div>
 
   <div class="post-actions">
@@ -12,7 +27,7 @@
       <form method="post" action="{{ url_for('main.like_post', post_id=post.id) }}">
         <button type="submit" class="btn-ghoust">👍 {{ post.likes|length }}</button>
       </form>
-      {% if current_user.role in ['admin','moderator'] or current_user.id == post.author_id %}
+      {% if current_user.role in ['admin','moderator'] or current_user.id == post.user_id %}
         <a href="{{ url_for('main.edit_post', post_id=post.id) }}" class="btn">Редагувати</a>
         <form method="post" action="{{ url_for('main.delete_post', post_id=post.id) }}" style="display:inline;">
           <button class="btn-danger" type="submit">Видалити</button>
@@ -22,29 +37,72 @@
   </div>
 </article>
 
-<section class="comments">
-    <!-- Форма додавання коментаря -->
-  <div class="comment-form">
-    <form method="post" action="{{ url_for('main.add_comment', post_id=post.id) }}">
-      <textarea name="content" rows="3" placeholder="Напиши свій коментар..."></textarea>
-      <button type="submit">Додати</button>
-    </form>
-  </div>
+<div class="comments-section">
+    <h3>Коментарі</h3>
 
-  <!-- Список коментарів -->
-  <div class="comment-list">
-    <h4>Коментарі:</h4>
     {% for comment in post.comments %}
-      <div class="comment">
-        <span class="author">{{ comment.user.username }}</span>
-        <span class="date">{{ comment.created_at.strftime("%d.%m.%Y %H:%M") }}</span>
-        <div class="content">{{ comment.content }}</div>
-      </div>
+    <div class="comment">
+        <div class="comment-header">
+            <span class="comment-author">{{ comment.user.username }}</span>
+            <span class="comment-date">{{ comment.created_at.strftime('%d.%m.%Y %H:%M') }}</span>
+        </div>
+        <div class="comment-body">
+            {{ comment.content }}
+        </div>
+    </div>
     {% else %}
-      <p class="text-muted">Поки що немає коментарів.</p>
+    <p>Коментарів ще немає. Будьте першим!</p>
     {% endfor %}
-  </div>
 
+    {% if current_user.is_authenticated %}
+    <form method="POST" action="{{ url_for('main.add_comment', post_id=post.id) }}" class="comment-form">
+        {{ comment_form.hidden_tag() }}
+        {{ comment_form.content(class="form-textarea", placeholder="Напишіть свій коментар...") }}
+        {{ comment_form.submit(class="btn btn-submit") }}
+    </form>
+    {% else %}
+    <p>Щоб залишити коментар, <a href="{{ url_for('main.login') }}">увійдіть</a>.</p>
+    {% endif %}
 
-</section>
+</div>
+
 {% endblock %}
+
+<script>
+const imagesInput = document.getElementById('images');
+const preview = document.getElementById('preview');
+const mainIndexInput = document.getElementById('main_image_index');
+
+imagesInput.addEventListener('change', () => {
+    preview.innerHTML = '';
+    const files = imagesInput.files;
+    Array.from(files).forEach((file, i) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('preview-img');
+            img.style.cursor = 'pointer';
+            if (i == 0) img.style.border = '3px solid red'; // перше головне за замовчуванням
+            img.addEventListener('click', () => {
+                mainIndexInput.value = i;
+                document.querySelectorAll('.preview-img').forEach(el => el.style.border = '');
+                img.style.border = '3px solid red';
+            });
+            preview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    });
+    mainIndexInput.value = 0;
+});
+
+</script>
+
+<style>
+
+
+</style>
+
+
+
+

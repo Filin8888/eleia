@@ -1,9 +1,14 @@
 # маршрути (логіка сайту / API)
 from flask import render_template, redirect, url_for, request, flash, session, Blueprint, abort
-from models import User, Post, Comment
+from models import User, Post, Comment, PostImage
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from extentions import db
+import os
+from werkzeug.utils import secure_filename
+from flask import current_app
 from sqlalchemy import or_
+from forms import PostForm, CommentForm
+from utils import save_image
 
 
 main_bp = Blueprint("main", __name__)
@@ -66,32 +71,33 @@ def login():
 
 
 # =========================================
-# Додавання посту (для всіх зареєстрованих)
+# Додавання посту 
 # =========================================
-@main_bp.route("/create_post", methods=["GET", "POST"])
+@main_bp.route("/add_post", methods=["GET", "POST"])
 @login_required
 def add_post():
-    if request.method == "POST":
-        title = request.form.get("title")   # беремо з форми
-        content = request.form.get("content")
+    if current_user.role in ['admin', 'moderator']:
+        if request.method == "POST":
+            title = request.form.get("title")   # беремо з форми
+            content = request.form.get("content")
 
-        if not title or not content:
-            flash("Всі поля обов’язкові!", "danger")
-            return redirect(url_for("main.create_post"))
+            if not title or not content:
+                flash("Всі поля обов’язкові!", "danger")
+                return redirect(url_for("main.create_post"))
 
-        # створюємо пост, прив’язаний до користувача
-        new_post = Post(
-            title=title,
-            content=content,
-            user_id=current_user.id
-        )
-        db.session.add(new_post)
-        db.session.commit()
+            # створюємо пост, прив’язаний до користувача
+            new_post = Post(
+                title=title,
+                content=content,
+                user_id=current_user.id
+            )
+            db.session.add(new_post)
+            db.session.commit()
 
-        flash("Пост успішно доданий!", "success")
-        return redirect(url_for("main.blog"))
+            flash("Пост успішно доданий!", "success")
+            return redirect(url_for("main.blog"))
 
-    return render_template("create_post.html")
+        return render_template("create_post.html")
 
 
 # ===================================================
@@ -137,32 +143,39 @@ def profile(user_id):
 @main_bp.route("/create_post", methods=["GET", "POST"])
 @login_required
 def create_post():
-    if request.method == "POST":
-        title = request.form.get("title")
-        content = request.form.get("content")
+    form = PostForm()  # <- створюємо форму тут
 
-        if not title or not content:
-            flash("Заповни всі поля!", "danger")
-            return redirect(url_for("main.create_post"))
-
-        new_post = Post(title=title, content=content, user_id=current_user.id)
-        db.session.add(new_post)
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, content=form.content.data, user_id=current_user.id)
+        db.session.add(post)
         db.session.commit()
 
-        flash("Тема створена ✅", "success")
-        return redirect(url_for("main.blog"))
+        # збереження зображень
+        if form.images.data:  # якщо є файли
+            for i, file in enumerate(form.images.data):
+                filename = save_image(file)  # твоя функція збереження
+                is_main = (i == int(form.main_image_index.data or 0))
+                image = PostImage(filename=filename, post_id=post.id, is_main=is_main)
+                db.session.add(image)
+            db.session.commit()
 
-    return render_template("create_post.html")
+        flash("Пост створено!", "success")
+        return redirect(url_for("main.post", post_id=post.id))
+    
+      # Якщо GET або форма не пройшла валідацію
+    return render_template("create_post.html", form=form)
 
+
+    
 # =====================
 # Деталі посту
 # =====================
-@main_bp.route("/post/<int:post_id>")
-def post_detail(post_id):
-    post = Post.query.get(post_id)
-    if not post:
-        abort(404)
-    return render_template("post.html", post=post)
+@main_bp.route("/post/<int:post_id>", methods=["GET"])
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    comments = post.comments
+    comment_form = CommentForm()
+    return render_template("post.html", post=post, comments=comments, comment_form=comment_form)
 
 # =====================
 # Видалення акаунту
@@ -200,7 +213,8 @@ def like_post(post_id):
         post.likes.append(current_user)
 
     db.session.commit()
-    return redirect(url_for("main.post_detail", post_id=post.id))
+    return redirect(url_for("main.post", post_id=post.id))
+
 # =====================
 # Коментарі
 # =====================
@@ -208,9 +222,9 @@ def like_post(post_id):
 @login_required
 def add_comment(post_id):
     post = Post.query.get_or_404(post_id)
+    content = request.form.get("content", "").strip()
 
-    content = request.form.get("content")
-    if not content.strip():
+    if not content:
         flash("Коментар не може бути порожнім.", "danger")
         return redirect(url_for("main.post", post_id=post.id))
 
@@ -228,17 +242,32 @@ def add_comment(post_id):
 @login_required
 def edit_post(post_id):
     post = Post.query.get_or_404(post_id)
+    form = PostForm(obj=post)  # заповнюємо форму даними посту
 
     # дозволяємо редагувати лише автору або адмінам
     if post.user_id != current_user.id and current_user.role != "admin":
         flash("У вас немає прав редагувати цей пост.", "danger")
         return redirect(url_for("main.post", post_id=post.id))
 
-    if request.method == "POST":
-        post.title = request.form["title"]
-        post.content = request.form["content"]
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+
+        # якщо є зображення
+        if form.images.data:
+            for i, image_file in enumerate(form.images.data):
+                filename = save_image(image_file)  # кожен файл окремо
+                is_main = (i == int(form.main_image_index.data or 0))
+                image = PostImage(filename=filename, post_id=post.id, is_main=is_main)
+                db.session.add(image)
+            db.session.commit()
+
+
         db.session.commit()
         flash("Пост оновлено!", "success")
         return redirect(url_for("main.post", post_id=post.id))
 
-    return render_template("edit_post.html", post=post)
+    return render_template("edit_post.html", post=post, form=form)
+
+
+    

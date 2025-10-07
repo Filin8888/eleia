@@ -38,6 +38,8 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    image_file = db.Column(db.String(120), nullable=True)  # ← шлях до зображення
+    images = db.relationship("PostImage", backref="post", cascade="all, delete-orphan")
 
     likes = db.relationship("User", secondary=likes, backref="liked_posts")
     user = db.relationship("User", back_populates="posts")
@@ -64,6 +66,13 @@ class Comment(db.Model):
     user = db.relationship("User", back_populates="comments", lazy=True)
     post = db.relationship("Post", back_populates="comments", lazy=True)
 
+
+class PostImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(200), nullable=False)
+    is_main = db.Column(db.Boolean, default=False)
+    
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
 
 
 

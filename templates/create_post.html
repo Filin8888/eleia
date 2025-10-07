@@ -1,21 +1,75 @@
 <!-- Додавання поста -->
 {% extends "base.html" %}
-{% block title %}Нова тема{% endblock %}
+
 {% block content %}
-<div class="new-topic-form">
-  <h2>Нова тема</h2>
-  <form method="post" action="{{ url_for('main.add_post') }}">
-    <label for="title">Тема</label>
-    <input type="text" id="title" name="title">
+<div class="post-form-container">
+    <h2>{{ title }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
 
-    <label for="content">Текст</label>
-    <textarea id="content" name="content"></textarea>
+        <div class="form-group">
+            {{ form.title.label(class="form-label") }}
+            {{ form.title(class="form-input") }}
+        </div>
 
-    <label for="tags">Теги (через кому)</label>
-    <input type="text" id="tags" name="tags">
+        <div class="form-group">
+            {{ form.content.label(class="form-label") }}
+            {{ form.content(class="form-textarea") }}
+            <input type="file" id="images" name="images" multiple>
+            <input type="hidden" id="main_image_index" name="main_image_index">
 
-    <button type="submit">Опублікувати</button>
-  </form>
+            <div id="preview"></div>
+        </div>
+
+        <div class="form-group">
+            {{ form.images.label(class="form-label") }}
+            {{ form.images(class="form-control", multiple=True) }}
+            {% if post and post.image_filename %}
+                <!-- Головне зображення -->
+                {% set main_image = post.images|selectattr("is_main")|first %}
+                <img id="main-image" src="{{ url_for('static', filename='uploads/' ~ main_image.filename) }}" class="main-image">
+
+                <!-- Галерея -->
+                <div class="gallery">
+                    {% for img in post.images %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ img.filename) }}" 
+                            class="thumbnail" 
+                            onclick="document.getElementById('main-image').src=this.src;">
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-submit">Зберегти</button>
+    </form>
 </div>
-
 {% endblock %}
+
+
+
+<style>
+#preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 200px; /* обмежуємо висоту прев’ю */
+    overflow-y: auto;  /* якщо картинки виходять за висоту, буде скрол */
+}
+
+.preview-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover; /* обрізає, щоб не тягнуло пропорції */
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: border 0.2s;
+}
+
+.preview-img.main {
+    border: 3px solid red;
+}
+</style>
+
+
+
