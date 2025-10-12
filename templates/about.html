@@ -3,9 +3,357 @@
 {% block title %}Про заклад - Eleia School{% endblock %}
 
 {% block content %}
-<h1>Про Eleia School</h1>
+<div class="welcome">
+    <div>
+        <h1>Ласкаво просимо до Елеї</h1>
+        <p> Ми — простір, де навчання допомагає дитині не лише здобувати знання,
+            а й розкривати власний потенціал. Наша гімназія поєднує академічну якість із турботою про особистість, 
+            щоб кожен учень мав можливість стати успішним, впевненим і самостійним.
+        </p>
+    </div>
+    
 
-<div class="image-placeholder">[Місце для зображення]</div>
+    <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Логотип" width="300">
+</div>
 
-<p>Тут повний текст з розділу “Про заклад” сайту Eleia School…</p>
+<div class="mission">
+    <h1>Наша місія та цінності</h1>
+    <div class="grid">
+        <div>
+            <h2>Індивідуальний підхід до кожного учня</h2>
+            <p> 
+                Ми визнаємо унікальність кожної дитини та враховуємо її інтереси, 
+                здібності й темп навчання. Це допомагає створити умови, 
+                де кожен учень розкриває свій потенціал і вчиться із задоволенням.
+            </p>
+        </div>
+        <div>
+            <h2>Системна освіта через дію і практику</h2>
+            <p>
+                Навчання будується не лише на теорії, 
+                а й на реальному досвіді через проєкти, 
+                досліди та обговорення. 
+                Такий підхід допомагає краще розуміти матеріал 
+                та застосовувати знання в житті.
+            </p>
+        </div>
+        <div>
+            <h2>Партнерство школи, родини та дитини</h2>
+            <p>
+                Ми будуємо відкриту комунікацію з батьками та залучаємо їх до освітнього процесу. 
+                Співпраця допомагає разом підтримувати дитину на кожному етапі розвитку.
+            </p>
+        </div>
+        <div>
+            <h2>Безпека, повага та підтримка кожної дитини</h2>
+            <p>
+                Ми створюємо середовище, де дитина відчуває себе захищеною, 
+                впевненою та вільною у самовираженні. Це сприяє емоційному комфорту, 
+                гармонійному розвитку та бажанню навчатися.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="how-we-works">
+    <div>
+        <h1>Як ми навчаємо</h1>
+        <p>
+            Наше навчання побудоване на поєднанні класичних освітніх основ та сучасних технологій. 
+            Ми не просто даємо знання, а допомагаємо дітям розвивати критичне мислення, 
+            самостійність і навички командної роботи.
+        </p>
+    </div>
+    <div class="greed">
+        <div>
+            <h2>Сучасне інтегроване навчання</h2>
+            <p>
+                Ми об’єднуємо предмети в тематичні блоки, 
+                щоб показати зв’язок між знаннями. 
+                Це дозволяє учням краще розуміти матеріал і мислити системно.
+            </p>
+        </div>
+        <div>
+            <h2>Практичні завдання та проєкти</h2>
+            <p>
+                Кожна тема супроводжується застосуванням знань на практиці через завдання, 
+                проєкти або досліди. Це допомагає глибше засвоїти матеріал та підвищує інтерес до навчання.
+            </p>
+        </div>
+        <div>
+            <h2>Розвиток критичного мислення</h2>
+            <p>
+                Ми навчаємо дітей аналізувати інформацію, 
+                ставити запитання та обґрунтовувати власні висновки. 
+                Це формує навички, необхідні для життя в сучасному світі.
+            </p>
+        </div>
+        <div>
+            <h2>Використання цифрових технологій</h2>
+            <p>
+                У навчанні ми активно застосовуємо Google Classroom, 
+                онлайн-ресурси та освітні платформи. Це забезпечує гнучкість, 
+                доступність та актуальність навчального процесу.
+            </p>
+        </div>
+        <div>
+            <h2>Підтримка самостійності та відповідальності</h2>
+            <p>
+                Ми вчимо учнів планувати свій час, 
+                виконувати завдання та оцінювати результати. 
+                Такий підхід формує внутрішню мотивацію та відповідальне ставлення до навчання.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="how-enter">
+    <div class="enter">
+        <div>
+            <h1>Як вступити до школи?</h1>
+            <p>
+                Ми раді запросити у нашу гімназію нових учнів, 
+                які готові вчитися, розвиватися та відкривати нові горизонти. 
+                Прийом здійснюється в кілька етапів для зручності родин та дітей.
+            </p>
+        </div>
+        <div class="grid">
+            <div>
+                <h2>Зв’яжіться з нами</h2>
+                <p>
+                    Для того, щоб забрати документи зі своєї старої школи, 
+                    вам необхідно надати довідку зі школи, в яку ви збираєтеся переходити.
+                </p>
+            </div>
+            <div>
+                <h2>Отримайте екскурсію</h2>
+                <p>
+                    Ви зможете познайомитися з адміністрацією та вчителями, 
+                    а також отримати відповіді на запитання.
+                </p>
+            </div>
+            <div>
+                <h2>Пройдіть тестування</h2>
+                <p>
+                    Абітурієнт проходе співбесіду, 
+                    вхідне тестування та ознайомиться з результатами.
+                </p>
+            </div>
+            <div>
+                <h2>Укладіть договір</h2>
+                <p>
+                    Примірник договору, заяву, 
+                    анкету та особову справу вашої дитини 
+                    необхідно можна передати особисто чи надіслати поштою.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="license">
+    <div>
+        <h1>Наша ліцензія</h1>
+        <p>Ліцензія на провадження освітньої діяльності у сфері повної загальної середньої освіти </p>
+    </div>
+    <div>
+        <img src="{{ url_for('static', filename='images/eleya-licenziya-1.jpg') }}" alt="Ліцензія" width="550">
+        <img src="{{ url_for('static', filename='images/eleya-licenziya-2.jpg') }}" alt="Ліцензія" width="550">
+    </div>
+</div>
+
+<div class="gallery">
+  <div class="main-photo">
+    <button class="prev">&#10094;</button>
+       <img id="current-photo" src="{{ url_for('static', filename='images/eleia/Photo-1.jpg') }}" alt="photo">
+    <button class="next">&#10095;</button>
+  </div>
+
+  <div class="thumbnails">
+    <img src="{{ url_for('static', filename='images/eleia/Photo-1.jpg') }}" class="active">
+    <img src="{{ url_for('static', filename='images/eleia/Photo-2.jpg') }}">
+    <img src="{{ url_for('static', filename='images/eleia/Photo-3.jpg') }}">
+    <img src="{{ url_for('static', filename='images/eleia/Photo-4.jpg') }}">
+    <img src="{{ url_for('static', filename='images/eleia/Photo-5.jpg') }}">
+    <img src="{{ url_for('static', filename='images/eleia/Photo-6.jpg') }}">
+    <img src="{{ url_for('static', filename='images/eleia/Photo-7.jpg') }}">
+    <img src="{{ url_for('static', filename='images/eleia/Photo-8.jpg') }}">
+    <img src="{{ url_for('static', filename='images/eleia/Photo-9.jpg') }}">
+    <img src="{{ url_for('static', filename='images/eleia/Photo-10.jpg') }}">
+    <img src="{{ url_for('static', filename='images/eleia/Photo-11.jpg') }}">
+    <img src="{{ url_for('static', filename='images/eleia/Photo-13.jpg') }}">
+  </div>
+</div>
+
+
+<style>
+.welcome {
+    display: flex;
+    align-items: center; /* центрує по вертикалі */
+     gap: 20px; /* відступ між фото і текстом */
+}
+
+.welcome img {
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* --- грід для блоків --- */
+.grid {
+  margin-top: 30px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(1, auto);
+  gap: 10px;
+}
+
+.grid div {
+  background: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.grid h2 {
+    font-size: large;
+    font-weight: bold;
+    text-align: left;
+}
+
+.grid p {
+    font-size: medium;
+}
+
+.greed {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 10px;
+}
+
+.greed p {
+    font-size: 14px;
+}
+
+.greed h2 {
+    font-size: large;
+    font-weight: bold;
+    text-align: left;
+}
+
+.how-enter {
+    background-color: rgb(248, 227, 188);
+    width: 100%; /* ширина вікна браузера */
+
+}
+.enter {
+
+    box-sizing: border-box;
+    padding: 20px 20px 40px 20px;
+}
+body {
+  margin: 0;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f4f4;
+  height: 100vh;
+}
+
+.license {
+    margin-bottom: 50px;
+}
+
+.gallery {
+  text-align: center;
+}
+
+.main-photo {
+  position: relative;
+  display: inline-block;
+}
+
+.main-photo img {
+  width: 1000px;
+  height: 800px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.main-photo button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.main-photo .prev { left: 10px; }
+.main-photo .next { right: 10px; }
+
+.thumbnails {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.thumbnails img {
+  width: 100px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+.thumbnails img:hover,
+.thumbnails img.active {
+  opacity: 1;
+  border: 2px solid #3498db;
+}
+
+</style>
+
+<script>
+const mainImg = document.getElementById("current-photo");
+const thumbnails = document.querySelectorAll(".thumbnails img");
+let index = 0;
+
+function showImage(i) {
+  thumbnails.forEach(img => img.classList.remove("active"));
+  thumbnails[i].classList.add("active");
+  mainImg.src = thumbnails[i].src;
+}
+
+document.querySelector(".next").addEventListener("click", () => {
+  index = (index + 1) % thumbnails.length;
+  showImage(index);
+});
+
+document.querySelector(".prev").addEventListener("click", () => {
+  index = (index - 1 + thumbnails.length) % thumbnails.length;
+  showImage(index);
+});
+
+thumbnails.forEach((img, i) => {
+  img.addEventListener("click", () => {
+    index = i;
+    showImage(i);
+  });
+});
+</script>
+
 {% endblock %}

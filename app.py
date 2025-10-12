@@ -19,13 +19,28 @@ def create_app():
     login_manager.init_app(app)             # прив'язуємо до Flask
     login_manager.login_view = "main.login" # маршрут для редиректу, якщо не залогінений
 
-    @app.route('/')
-    def index():
-        return render_template('index.html')
+    # @app.route('/')
+    # def index():
+    #     return render_template('index.html')
 
     @app.route('/about')
     def about():
         return render_template('about.html')
+    
+    @app.route('/team')
+    def team():
+        return render_template('team.html')
+    
+    @app.route('/programs')
+    def programs():
+        return render_template('programs.html')
+    
+    @app.route('/admission')
+    def admission():
+        return render_template('admission.html')
+    
+    
+
 
     from models import User
     @login_manager.user_loader

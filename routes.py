@@ -143,28 +143,47 @@ def profile(user_id):
 @main_bp.route("/create_post", methods=["GET", "POST"])
 @login_required
 def create_post():
-    form = PostForm()  # <- створюємо форму тут
+    form = PostForm()
 
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, user_id=current_user.id)
+        post = Post(
+            title=form.title.data,
+            content=form.content.data,
+            user_id=current_user.id
+        )
+
         db.session.add(post)
+        db.session.flush()  # щоб отримати post.id
+
+        # === ГОЛОВНЕ ЗОБРАЖЕННЯ ===
+        main_file = form.main_image.data
+        if main_file:
+            main_filename = secure_filename(main_file.filename)
+            main_path = os.path.join(current_app.root_path, 'static/uploads', main_filename)
+            main_file.save(main_path)
+
+            post.main_image = main_filename
+
+            db.session.add(PostImage(
+                filename=main_filename,
+                post_id=post.id,
+                is_main=True
+            ))
+
+        # === ГАЛЕРЕЯ (JS додає файли через name="gallery_images[]") ===
+        gallery_files = request.files.getlist("gallery_images[]")
+        for file in gallery_files:
+            if file and file.filename.strip():
+                filename = secure_filename(file.filename)
+                path = os.path.join(current_app.root_path, 'static/uploads', filename)
+                file.save(path)
+                db.session.add(PostImage(filename=filename, post_id=post.id))
+
         db.session.commit()
+        flash('✅ Пост успішно створено!', 'success')
+        return redirect(url_for('main.blog'))
 
-        # збереження зображень
-        if form.images.data:  # якщо є файли
-            for i, file in enumerate(form.images.data):
-                filename = save_image(file)  # твоя функція збереження
-                is_main = (i == int(form.main_image_index.data or 0))
-                image = PostImage(filename=filename, post_id=post.id, is_main=is_main)
-                db.session.add(image)
-            db.session.commit()
-
-        flash("Пост створено!", "success")
-        return redirect(url_for("main.post", post_id=post.id))
-    
-      # Якщо GET або форма не пройшла валідацію
-    return render_template("create_post.html", form=form)
-
+    return render_template('create_post.html', form=form)
 
     
 # =====================
@@ -254,11 +273,10 @@ def edit_post(post_id):
         post.content = form.content.data
 
         # якщо є зображення
-        if form.images.data:
-            for i, image_file in enumerate(form.images.data):
+        if form.gallery_images.data:
+            for i, image_file in enumerate(form.gallery_images.data):
                 filename = save_image(image_file)  # кожен файл окремо
-                is_main = (i == int(form.main_image_index.data or 0))
-                image = PostImage(filename=filename, post_id=post.id, is_main=is_main)
+                image = PostImage(filename=filename, post_id=post.id, is_main=True)
                 db.session.add(image)
             db.session.commit()
 
@@ -269,5 +287,10 @@ def edit_post(post_id):
 
     return render_template("edit_post.html", post=post, form=form)
 
-
-    
+# =====================
+# Витяг новин за датою
+# =====================
+@main_bp.route('/')
+def index():
+    recent_posts = Post.query.order_by(Post.created_at.desc()).limit(3).all()
+    return render_template('index.html', recent_posts=recent_posts)

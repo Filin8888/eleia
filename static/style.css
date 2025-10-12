@@ -1,76 +1,134 @@
 /* ===================== */
-/* Основні стилі сторінки */
+/* БАЗОВІ СТИЛІ (для base.html) */
 /* ===================== */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-    color: #768100;
 
-    /* додаємо для футера */
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
+/* --- Загальні --- */
 html, body {
-  height: 100%;           /* розтягуємо всю сторінку */
+  height: 100%;
   margin: 0;
+  padding: 0;
+  /* width: 100vw; */
 }
 
 main {
-    max-width: 1100px;
-    margin: 30px auto;
-    padding: 0 20px;
+  /* width: 100vw; */
+  margin-bottom: 50px;
+}
 
-    /* щоб футер прилипає вниз */
-    flex: 1;
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-weight: bolder; /* робить текст трохи насиченішим */
+  
+  -webkit-font-smoothing: antialiased; /* згладжування */
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.8px; /* легкий простір між літерами */
+  font-family: 'Manrope', sans-serif;
+}
 
+h1, h2, h3, h4, h5 {
+    font-weight: bolder;
+    color: #1a1a1a;
+
+}
+p {
+  line-height: 1.6;
+  text-shadow: 0 0 0.5px rgba(0, 0, 0, 0.4);
+  opacity: 0.6;
+  text-align: left;
+  font-size: large;
 }
 
 
-/* ===================== */
-/* Хедер і навігація */
-/* ===================== */
+
+/* --- Хедер --- */
 header {
-    background-color: #768100; 
-    color: white;
-    padding: 15px 30px;
+  background-color: #ffffff;
+  color: rgb(141, 145, 0);
+  padding: 15px 30px;
 }
 
 header nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 25px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 25px;
 }
 
 header nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 5px 10px;
-    transition: background 0.3s;
+  color: rgb(141, 145, 0);
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 10px;
+  transition: background 0.3s;
+
 }
 
 header nav ul li a:hover {
-    background-color: #0066cc;
-    border-radius: 5px;
+  background-color: #0066cc;
+  border-radius: 5px;
 }
 
-/* .nav-text{
-    color: white;
-} */
 
-/* ===================== */
-/* Футер */
-/* ===================== */
+
+.btn-logout {
+  background-color: #c0392b;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  transition: all 0.3s ease;
+  padding: 10px, 16px;
+
+    
+  display: flex;
+  align-items: center;     /* центрування по вертикалі */
+  justify-content: center; /* центрування по горизонталі */
+
+}
+
+.btn-logout:hover {
+  background-color: #a93226;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(192, 57, 43, 0.4);
+}
+/* 
+.nav-colored {
+  color: #4a7c2e; 
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.nav-colored:hover {
+  color: #2e5a1d; 
+  text-decoration: underline;
+}
+
+
+.btn-adm {
+  background-color: #6b8e23;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.btn-adm:hover {
+  background-color: #557a1f;
+}
+ */
+
+/* --- Футер --- */
 .footer {
-  background: #dace97; /* бежевий фон */
+  background: #dace97;
   padding: 40px 60px;
-  margin-top: auto; /* футер прилипає вниз */
+  margin-top: auto;
 }
 
 .footer-container {
@@ -132,176 +190,130 @@ header nav ul li a:hover {
 }
 
 
-.post-image {
-    max-width: 100%;
-    border-radius: 10px;
-    margin: 15px 0;
-}
 
-.btn-adm {
-    background-color: #808000;  /* оливковий */
-    color: white;               /* текст білий для контрасту */
-    border: none;
-}
-
-.btn-adm:hover {
-    background-color: #6b6b00;  /* темніший оливковий при наведенні */
-    color: white;
-}
+/* ===================== */
+/* АДМІН-ПАНЕЛЬ / ФОРМИ */
+/* ===================== */
 
 .post-form-container {
-    max-width: 700px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f5f5dc; /* світлий оливковий відтінок */
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f5f5dc;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 .form-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .form-label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 5px;
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 
-.form-input, .form-textarea {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .form-textarea {
-    min-height: 150px;
+  min-height: 150px;
 }
 
 .btn-submit {
-    background-color: #808000;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 600;
+  background-color: #808000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .btn-submit:hover {
-    background-color: #6b6b00;
+  background-color: #6b6b00;
 }
 
 .current-image img {
-    max-width: 200px;
-    margin-top: 10px;
-    border-radius: 4px;
+  max-width: 200px;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+/* --- кнопки адмінки --- */
+.btn-adm {
+  background-color: #808000;
+  color: white;
+  border: none;
+}
+
+.btn-adm:hover {
+  background-color: #6b6b00;
+  color: white;
 }
 
 
-.comments-section {
-    max-width: 700px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: #f5f5dc; /* світлий оливковий фон */
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    align-items: center;
 }
 
-.comments-section h3 {
-    margin-bottom: 15px;
-    font-size: 1.5em;
-    color: #556b2f; /* темний оливковий для заголовка */
+.nav-menu li {
+    position: relative;
 }
 
-.comment {
-    padding: 10px 15px;
-    margin-bottom: 15px;
-    background-color: #e6e6b8; /* трохи світліший відтінок */
+.nav-menu a {
+    text-decoration: none;
+    color: #1a1a1a;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: #5c6b2f; /* оливковий, як на eleia.school */
+}
+
+/* --- DROPDOWN --- */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     border-radius: 6px;
-    border-left: 4px solid #808000; /* акцентна смужка */
+    list-style: none;
+    padding: 10px 0;
+    min-width: 180px;
+    z-index: 10;
 }
 
-.comment-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 0.9em;
-    color: #333;
+.dropdown-menu li {
+    padding: 0;
 }
 
-.comment-author {
-    font-weight: 600;
-    color: #556b2f;
+.dropdown-menu a {
+    display: block;
+    padding: 10px 15px;
+    color: #1a1a1a;
+    font-weight: 400;
+    white-space: nowrap;
 }
 
-.comment-body {
-    font-size: 1em;
-    line-height: 1.5;
-    color: #222;
+.dropdown-menu a:hover {
+    background: #f5f5f5;
+    color: #5c6b2f;
 }
 
-.comment-form {
-    margin-top: 20px;
-}
-
-.comment-form .form-textarea {
-    width: 100%;
-    padding: 8px 12px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    min-height: 80px;
-    margin-bottom: 10px;
-}
-
-.comment-form .btn-submit {
-    background-color: #808000;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.comment-form .btn-submit:hover {
-    background-color: #6b6b00;
-}
-
-
-.main-image img {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
-
-.gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.gallery .thumb {
-    width: 150px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.gallery .thumb:hover {
-    transform: scale(1.05);
-}
-
-.blog-container .post-card img {
-    width: 100%;        /* займає ширину контейнера поста */
-    max-width: 400px;   /* максимум, щоб не розтягувати */
-    height: auto;       /* зберігає пропорції */
-    border-radius: 5px;
-    margin: 10px 0;
+/* Показуємо меню при наведенні */
+.dropdown:hover .dropdown-menu {
     display: block;
 }

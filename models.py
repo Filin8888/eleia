@@ -38,13 +38,25 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    image_file = db.Column(db.String(120), nullable=True)  # ← шлях до зображення
-    images = db.relationship("PostImage", backref="post", cascade="all, delete-orphan")
 
-    likes = db.relationship("User", secondary=likes, backref="liked_posts")
+    # головне зображення
+    image_file = db.Column(db.String(255), nullable=True)
+    main_image = db.Column(db.String(255), nullable=True)
+
+    # зв’язок для галереї зображень
+    gallery_images = db.relationship(
+        "PostImage",
+        back_populates="post",
+        cascade="all, delete-orphan"
+    )
+
+    # лайки
+    likes = db.relationship("User", secondary="likes", backref="liked_posts")
+
+    # автор поста
     user = db.relationship("User", back_populates="posts")
 
-    # ось тут треба каскад
+    # коментарі
     comments = db.relationship("Comment", back_populates="post", cascade="all, delete-orphan")
 
     @property
@@ -68,11 +80,14 @@ class Comment(db.Model):
 
 
 class PostImage(db.Model):
+    __tablename__ = "post_images"
+
     id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column(db.String(200), nullable=False)
+    filename = db.Column(db.String(255), nullable=False)
     is_main = db.Column(db.Boolean, default=False)
-    
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey("posts.id"), nullable=False)
+
+    post = db.relationship("Post", back_populates="gallery_images")
 
 
 

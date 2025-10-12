@@ -5,8 +5,12 @@ from wtforms.validators import DataRequired
 class PostForm(FlaskForm):
     title = StringField("Заголовок", validators=[DataRequired()])
     content = TextAreaField("Контент", validators=[DataRequired()])
-    images = MultipleFileField("Зображення")  # <- додано для кількох файлів
-    main_image_index = StringField("Головне зображення")  # можна передавати індекс головного з фронту
+
+
+    main_image = StringField("Головне зображення")  # можна передавати індекс головного з фронту
+
+    gallery_images = MultipleFileField('Додаткові фото')  # ← ось це нове
+
     submit = SubmitField("Зберегти")
 
 

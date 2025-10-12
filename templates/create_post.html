@@ -1,51 +1,141 @@
-<!-- Додавання поста -->
 {% extends "base.html" %}
-
 {% block content %}
-<div class="post-form-container">
-    <h2>{{ title }}</h2>
-    <form method="post" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
+<div class="container mt-4">
+  <h2>Створити пост</h2>
 
-        <div class="form-group">
-            {{ form.title.label(class="form-label") }}
-            {{ form.title(class="form-input") }}
-        </div>
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
 
-        <div class="form-group">
-            {{ form.content.label(class="form-label") }}
-            {{ form.content(class="form-textarea") }}
-            <input type="file" id="images" name="images" multiple>
-            <input type="hidden" id="main_image_index" name="main_image_index">
+    <div class="mb-3">
+      {{ form.title.label(class="form-label") }}
+      {{ form.title(class="form-control") }}
+    </div>
 
-            <div id="preview"></div>
-        </div>
+    <div class="mb-3">
+      {{ form.content.label(class="form-label") }}
+      {{ form.content(class="form-control") }}
+    </div>
 
-        <div class="form-group">
-            {{ form.images.label(class="form-label") }}
-            {{ form.images(class="form-control", multiple=True) }}
-            {% if post and post.image_filename %}
-                <!-- Головне зображення -->
-                {% set main_image = post.images|selectattr("is_main")|first %}
-                <img id="main-image" src="{{ url_for('static', filename='uploads/' ~ main_image.filename) }}" class="main-image">
+    <!-- Головне зображення -->
+    <div class="mb-3", style="display: none;">
+      {{ form.main_image.label(class="form-label") }}
+      {{ form.main_image(class="form-control", id="mainImageInput") }}
+      <div id="mainImagePreview" class="mt-2"></div>
+    </div>
 
-                <!-- Галерея -->
-                <div class="gallery">
-                    {% for img in post.images %}
-                        <img src="{{ url_for('static', filename='uploads/' ~ img.filename) }}" 
-                            class="thumbnail" 
-                            onclick="document.getElementById('main-image').src=this.src;">
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div>
+    <!-- Галерея з кнопкою "+" -->
+    <div class="mb-3">
+      <label class="form-label">Галерея</label>
+      <div id="galleryPreview" class="d-flex flex-wrap"></div>
 
-        <button type="submit" class="btn btn-submit">Зберегти</button>
-    </form>
+      <button type="button" id="addGalleryImage" class="btn btn-outline-primary mt-2">+</button>
+      <input type="file" id="galleryInput" name="gallery_images[]" multiple hidden>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">Опублікувати</button>
+  </form>
 </div>
-{% endblock %}
 
+<script>
+  // Попередній перегляд головного зображення
+  document.getElementById('mainImageInput').addEventListener('change', function (event) {
+    const preview = document.getElementById('mainImagePreview');
+    preview.innerHTML = '';
+    const file = event.target.files[0];
+    if (file) {
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.style.width = '200px';
+      img.style.borderRadius = '8px';
+      preview.appendChild(img);
+    }
+  });
 
+  // Галерея з кнопкою "+"
+  const addBtn = document.getElementById('addGalleryImage');
+  const input = document.getElementById('galleryInput');
+  const preview = document.getElementById('galleryPreview');
+  let files = [];
+
+  addBtn.addEventListener('click', () => input.click());
+
+  input.addEventListener('change', (e) => {
+    const newFiles = Array.from(e.target.files);
+    files = files.concat(newFiles);
+
+    preview.innerHTML = '';
+
+    files.forEach((file, index) => {
+      const div = document.createElement('div');
+      div.style.position = 'relative';
+      div.style.margin = '5px';
+
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.style.width = '120px';
+      img.style.height = 'auto';
+      img.style.borderRadius = '6px';
+
+      const removeBtn = document.createElement('button');
+      removeBtn.innerText = '×';
+      removeBtn.style.position = 'absolute';
+      removeBtn.style.top = '0';
+      removeBtn.style.right = '0';
+      removeBtn.style.background = 'red';
+      removeBtn.style.color = 'white';
+      removeBtn.style.border = 'none';
+      removeBtn.style.borderRadius = '50%';
+      removeBtn.style.cursor = 'pointer';
+      removeBtn.onclick = () => {
+        files.splice(index, 1);
+        updateGalleryPreview();
+      };
+
+      div.appendChild(img);
+      div.appendChild(removeBtn);
+      preview.appendChild(div);
+    });
+
+    updateGalleryPreview();
+  });
+
+  // Оновлення галереї після видалення
+  function updateGalleryPreview() {
+    const dataTransfer = new DataTransfer();
+    files.forEach(f => dataTransfer.items.add(f));
+    input.files = dataTransfer.files;
+
+    preview.innerHTML = '';
+    files.forEach((file, index) => {
+      const div = document.createElement('div');
+      div.style.position = 'relative';
+      div.style.margin = '5px';
+
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.style.width = '120px';
+      img.style.borderRadius = '6px';
+
+      const removeBtn = document.createElement('button');
+      removeBtn.innerText = '×';
+      removeBtn.style.position = 'absolute';
+      removeBtn.style.top = '0';
+      removeBtn.style.right = '0';
+      removeBtn.style.background = 'red';
+      removeBtn.style.color = 'white';
+      removeBtn.style.border = 'none';
+      removeBtn.style.borderRadius = '50%';
+      removeBtn.onclick = () => {
+        files.splice(index, 1);
+        updateGalleryPreview();
+      };
+
+      div.appendChild(img);
+      div.appendChild(removeBtn);
+      preview.appendChild(div);
+    });
+  }
+</script>
 
 <style>
 #preview {
@@ -70,6 +160,4 @@
     border: 3px solid red;
 }
 </style>
-
-
-
+{% endblock %}

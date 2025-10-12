@@ -10,27 +10,82 @@
 
     <hr>
 
-    <!-- Список постів -->
-    <div class="posts-grid">
     {% for post in posts %}
-        <div class="post-card">
-            {% set main_image = post.images|selectattr('is_main')|list %}
+        <div class="card mb-4" style="display: flex; flex-direction: row; align-items: center; max-width: 900px; margin: 20px auto;">
+            
+            {% set main_image = post.gallery_images|first %}
             {% if main_image %}
-                <div class="post-image">
-                    <img src="{{ url_for('static', filename='uploads/' ~ main_image[0].filename) }}">
-                </div>
+                <img src="{{ url_for('static', filename='uploads/' ~ main_image.filename) }}"
+                    alt="Зображення поста"
+                    style="width: 300px; height: 200px; object-fit: cover; border-radius: 8px; margin-right: 20px;">
             {% endif %}
-            <div class="post-content">
-                <h2><a href="{{ url_for('main.post', post_id=post.id) }}">{{ post.title }}</a></h2>
-                <p>{{ post.content[:200] ~ ('...' if post.content|length > 200 else '') }}</p>
-                <small>Автор: {{ post.user.username }}</small>
+
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="{{ url_for('main.post', post_id=post.id) }}">{{ post.title }}</a>
+                </h3>
+                <p class="card-text">{{ post.content[:200] ~ ('...' if post.content|length > 200 else '') }}</p>
+                <p class="text-muted">Автор: {{ post.user.username }}</p>
             </div>
         </div>
     {% else %}
         <p>Поки що немає постів.</p>
     {% endfor %}
-    </div>
 
 </div>
-{% endblock %}
 
+<style>
+    /* ===================== */
+/* СТОРІНКА БЛОГУ */
+/* ===================== */
+
+.blog-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.blog-container .post-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 15px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.blog-container .post-card img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.blog-container .post-card h3 {
+  margin-top: 0;
+  font-size: 1.3em;
+  color: #333;
+}
+
+.blog-container .post-card p {
+  color: #555;
+  line-height: 1.4;
+}
+
+.blog-container .btn {
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.blog-container .btn:hover {
+  background-color: #0056b3;
+}
+
+</style>
+{% endblock %}

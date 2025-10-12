@@ -6,25 +6,6 @@ from flask import redirect, url_for, request
 from flask_login import current_user
 from models import User, Post
 from extentions import db
-# from flask_admin.form import FileUploadField
-# from flask_admin.form.upload import ImageUploadInput
-# import os
-# from flask import current_app
-
-# class PostAdminView(SecureModelView):
-#     # вказуємо, які поля будуть відображатися у формі
-#     form_columns = ['title', 'content', 'image_filename', 'user']
-
-#     # замість "image_filename" будемо використовувати FileUploadField
-#     form_extra_fields = {
-#         'image_filename': FileUploadField(
-#             'Зображення',
-#             base_path=os.path.join(current_app.root_path, 'static/uploads'),
-#             allow_overwrite=True,
-#             namegen=lambda obj, file_data: secure_filename(file_data.filename)
-#         )
-#     }
-
 
 
 class MyAdminIndexView(AdminIndexView):
@@ -43,20 +24,38 @@ class SecureModelView(ModelView):
         return redirect(url_for("main.login", next=request.url))
 
 
-admin = Admin(name="Адмінка", template_mode="bootstrap4", index_view=MyAdminIndexView(url="/admin"))
+# 🔒 Безпечний базовий клас для адмінки
+class SecureModelView(ModelView):
+    def is_accessible(self):
+        # тільки для залогінених адмінів
+        return current_user.is_authenticated and current_user.role == 'admin'
+
+    def inaccessible_callback(self, name, **kwargs):
+        # якщо не має доступу — редирект на логін
+        return redirect(url_for('main.login', next=request.url))
+
+
+# 👤 Вигляд моделі користувача
+class UserAdminView(SecureModelView):
+    column_list = ('id', 'username', 'email', 'role')
+    form_columns = ('username', 'email', 'password_hash', 'role')
+    column_editable_list = ('role',)
+    can_create = False  # користувачів створює форма реєстрації
+    can_delete = True
+
+
 
 
 def init_admin(app):
-    admin.init_app(app)
+    # 1️⃣ створюємо екземпляр адмінки
+    admin = Admin(app, name='Admin Panel', template_mode='bootstrap4')
 
-    # додаємо моделі
-    admin.add_view(SecureModelView(User, db.session, category="Models"))
+    # 2️⃣ додаємо моделі
+    admin.add_view(UserAdminView(User, db.session, category="Models"))
     admin.add_view(SecureModelView(Post, db.session, category="Models"))
 
-    # Простий і робочий варіант: додаємо статичне посилання на /blog
-    # (це не вимагає app_context та працює одразу)
+    # 3️⃣ додаємо посилання "На сайт"
     admin.add_link(MenuLink(name="На сайт", url="/blog"))
 
-    # АЛЬТЕРНАТИВА (якщо потрібен url_for, наприклад через префікси blueprint):
-    # with app.app_context():
-    #     admin.add_link(MenuLink(name="На сайт", url=url_for("main.blog")))
+    
+    

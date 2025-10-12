@@ -2,40 +2,42 @@
 {% extends "base.html" %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
-<article class="post-card">
-  <h2>{{ post.title }}</h2>
-  <p class="meta">Автор: {{ post.author.username }} · {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
-
-{% set main_image = post.images|selectattr('is_main')|list %}
-{% if main_image %}
+<main>
+  <h1>{{ post.title }}</h1>
   <div class="main-image">
-    <img src="{{ url_for('static', filename='uploads/' ~ main_image[0].filename) }}">
-  </div>
-{% endif %}
-
-
-  <div class="gallery">
-  {% for img in post.images %}
-    <img class="thumb" src="{{ url_for('static', filename='uploads/' ~ img.filename) }}">
-  {% endfor %}
+    {% if post.main_image %}
+      <img src="{{ url_for('static', filename='uploads/' + post.main_image) }}">
+    {% endif %}
   </div>
 
-  <div class="body">{{ post.content }}</div>
+  <p>{{ post.content }}</p>
 
-  <div class="post-actions">
-    {% if current_user.is_authenticated %}
-      <form method="post" action="{{ url_for('main.like_post', post_id=post.id) }}">
-        <button type="submit" class="btn-ghoust">👍 {{ post.likes|length }}</button>
-      </form>
-      {% if current_user.role in ['admin','moderator'] or current_user.id == post.user_id %}
+ {% if post.gallery_images %}
+  <div class="gallery d-flex flex-wrap gap-2">
+    {% for img in post.gallery_images %}
+    <img src="{{ url_for('static', filename='uploads/' + img.filename) }}"
+         class="gallery-img"
+         alt="Фото {{ loop.index }}">
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<!-- === Модальне вікно для перегляду === -->
+<div id="lightbox" class="lightbox">
+  <span class="close">&times;</span>
+  <img class="lightbox-image" src="" alt="">
+  <a class="prev">&#10094;</a>
+  <a class="next">&#10095;</a>
+</div>
+
+  {% if current_user.role in ['admin','moderator'] or current_user.id == post.user_id %}
         <a href="{{ url_for('main.edit_post', post_id=post.id) }}" class="btn">Редагувати</a>
         <form method="post" action="{{ url_for('main.delete_post', post_id=post.id) }}" style="display:inline;">
           <button class="btn-danger" type="submit">Видалити</button>
         </form>
-      {% endif %}
-    {% endif %}
-  </div>
-</article>
+  {% endif %}
+</main>
 
 <div class="comments-section">
     <h3>Коментарі</h3>
@@ -66,7 +68,229 @@
 
 </div>
 
+<style>
+/* ===================== */
+/* ОКРЕМИЙ ПОСТ */
+/* ===================== */
+
+/* --- головне зображення --- */
+.main-image img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* --- галерея зображень --- */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gallery .thumb {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.gallery .thumb:hover {
+  transform: scale(1.05);
+}
+
+/* --- секція коментарів --- */
+.comments-section {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f5f5dc;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.comments-section h3 {
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  color: #556b2f;
+}
+
+.comment {
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  background-color: #e6e6b8;
+  border-radius: 6px;
+  border-left: 4px solid #808000;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.9em;
+  color: #333;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: #556b2f;
+}
+
+.comment-body {
+  font-size: 1em;
+  line-height: 1.5;
+  color: #222;
+}
+
+.comment-form {
+  margin-top: 20px;
+}
+
+.comment-form .form-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  min-height: 80px;
+  margin-bottom: 10px;
+}
+
+.comment-form .btn-submit {
+  background-color: #808000;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.comment-form .btn-submit:hover {
+  background-color: #6b6b00;
+}
+
+
+</style>
+
+
+<style>
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gallery-img {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.gallery-img:hover {
+  transform: scale(1.05);
+}
+
+/* Лайтбокс */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.lightbox-image {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 10px;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 40px;
+  user-select: none;
+  transition: 0.3s;
+}
+
+.prev:hover, .next:hover {
+  color: #ddd;
+}
+
+.prev { left: 30px; }
+.next { right: 30px; }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const images = document.querySelectorAll('.gallery-img');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.querySelector('.lightbox-image');
+  const closeBtn = document.querySelector('.close');
+  const prevBtn = document.querySelector('.prev');
+  const nextBtn = document.querySelector('.next');
+  
+  let currentIndex = 0;
+
+  images.forEach((img, index) => {
+    img.addEventListener('click', () => {
+      lightbox.style.display = 'flex';
+      lightboxImage.src = img.src;
+      currentIndex = index;
+    });
+  });
+
+  const showImage = (index) => {
+    if (index < 0) index = images.length - 1;
+    if (index >= images.length) index = 0;
+    lightboxImage.src = images[index].src;
+    currentIndex = index;
+  };
+
+  prevBtn.addEventListener('click', () => showImage(currentIndex - 1));
+  nextBtn.addEventListener('click', () => showImage(currentIndex + 1));
+  
+  closeBtn.addEventListener('click', () => lightbox.style.display = 'none');
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) lightbox.style.display = 'none';
+  });
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') lightbox.style.display = 'none';
+    if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+    if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+  });
+});
+</script>
+
 {% endblock %}
+
 
 <script>
 const imagesInput = document.getElementById('images');
@@ -97,12 +321,3 @@ imagesInput.addEventListener('change', () => {
 });
 
 </script>
-
-<style>
-
-
-</style>
-
-
-
-
