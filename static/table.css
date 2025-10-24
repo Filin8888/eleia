@@ -1,0 +1,139 @@
+@media (max-width: 1024px) {
+  /* Прибираємо масштаб */
+  html {
+    transform: none;
+    width: 100%;
+  }
+
+  /* Менше відступів у секціях */
+  .section {
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .section img {
+    max-width: 100%;
+  }
+
+  /* Ховаємо футер */
+  .footer {
+    display: none;
+  }
+
+  /* Ховаємо меню, додаємо кнопку бургер */
+  .nav-menu {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 28px;
+    cursor: pointer;
+  }
+
+  /* Сайд-меню */
+  .mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -300px; /* спочатку сховане */
+  width: 260px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  padding: 30px 20px;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column; /* вертикально */
+  justify-content: flex-start; /* починати зверху */
+  align-items: flex-start; /* текст вирівняно зліва */
+  z-index: 1000;
+}
+
+.mobile-menu.open {
+  right: 0;
+}
+
+/* Список у колонку */
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column; /* ← вертикальний напрям */
+  gap: 20px; /* відстань між пунктами */
+}
+
+.mobile-menu ul li a {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 10px 0;
+  transition: color 0.3s;
+}
+
+.mobile-menu ul li a:hover {
+  color: #768100;
+}
+
+
+  .header-right {
+    display: none;
+  }
+
+.dropdown {
+  width: 100%;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  color: #333;
+  font-weight: 400;
+  font-size: 18px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.dropdown-content{
+  list-style:none;
+  padding-left:20px;
+  margin:0;
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .3s ease;
+}
+.dropdown.open .dropdown-content{
+  max-height:750px; /* достатньо для кількох пунктів */
+}
+
+.dropdown-toggle:hover {
+  color: #768100;
+}
+
+
+/* .dropdown-content a {
+  color: #768100;
+
+  font-size: 16px;
+  text-decoration: none;
+} */
+
+.dropdown-content a:hover {
+  color: #768100;
+}
+
+.documents {
+  display: none;
+}
+
+}

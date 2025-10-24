@@ -290,34 +290,3 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 {% endblock %}
-
-
-<script>
-const imagesInput = document.getElementById('images');
-const preview = document.getElementById('preview');
-const mainIndexInput = document.getElementById('main_image_index');
-
-imagesInput.addEventListener('change', () => {
-    preview.innerHTML = '';
-    const files = imagesInput.files;
-    Array.from(files).forEach((file, i) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.classList.add('preview-img');
-            img.style.cursor = 'pointer';
-            if (i == 0) img.style.border = '3px solid red'; // перше головне за замовчуванням
-            img.addEventListener('click', () => {
-                mainIndexInput.value = i;
-                document.querySelectorAll('.preview-img').forEach(el => el.style.border = '');
-                img.style.border = '3px solid red';
-            });
-            preview.appendChild(img);
-        };
-        reader.readAsDataURL(file);
-    });
-    mainIndexInput.value = 0;
-});
-
-</script>

@@ -1,11 +1,116 @@
 {% extends "base.html" %}
 
-{% block title %}Про Колектив - Eleia School{% endblock %}
+{% block title %}Вимоги вступу - Eleia School{% endblock %}
 
 {% block content %}
-<h1>Наш Колектив</h1>
 
-<div class="image-placeholder">[Місце для зображення]</div>
+<h1 style="text-align: center;">Як вступити до гімназії?</h1>
+<div class="grid">
+    <div class="step">
+        <br>
+        <br>
+        <h2>Зв’яжіться з нами</h2>
 
-<p>Тут повний текст з розділу “Про заклад” сайту Eleia School…</p>
+    </div>
+    <div class="step">
+        <br>
+        <br>
+        <h2>Отримайте екскурсію</h2>
+
+    </div>
+    <div class="step">
+        <br>
+        <br>
+        <h2>Пройдіть тестування</h2>
+
+    </div>
+    <div class="step">
+        <br>
+        <br>
+        <h2>Оберіть пакет навчання</h2>
+
+    </div>
+    <div class="step">
+        <br>
+        <br>
+        <h2>Підпишіть договір та сплатіть навчання</h2>
+
+    </div>
+    <div class="step">
+        <br>
+        <br>
+        <h2>Заберіть особову справу учня з попереднього місця навчання</h2>
+
+    </div>
+    <div class="step">
+        <br>
+        <br>
+        <h2>Надішліть нам пакет документів</h2>
+
+    </div>
+</div>
+
+<p style="font-size: small;"> 
+    Для отримання додаткової освіти без переведення зі своєї школи достатньо зареєструватися і оплатити навчання
+</p>
+
+<div >
+        <h1>Які документи необхідно подати?</h1>
+    <div class="grid">
+        <div class="step">
+            <br>
+            <br>
+            <h2>Заява на вступ</h2>
+
+        </div>
+        <div class="step">
+            <br>
+            <br>
+            <h2>Свідоцтво про народження дитини (копія)</h2>
+ 
+        </div>
+        <div class="step">
+            <br>
+            <br>
+            <h2>ІПН одного із батьків (копія)</h2>
+
+        </div>
+        <div class="step">
+            <br>
+            <br>
+            <h2>Оберіть пакет навчання</h2>
+  
+        </div>
+        <div class="step">
+            <br>
+            <br>
+            <h2>Довідка за місцем навчання дитини (за кордоном)</h2>
+        
+        </div>
+        <div class="step">
+            <br>
+            <br>
+            <h2>Медична довідка №086-1/О (за наявністю)</h2>
+       
+        </div>
+        <div class="step">
+            <br>
+            <br>
+            <h2>Підписаний договір про надання освітніх послуг</h2>
+        </div>
+    </div>
+</div>
+
+<style>
+
+
+/* Сітка */
+.grid {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  max-width: 1200px;
+  margin: 0 auto;
+}
+</style>
+
+
 {% endblock %}

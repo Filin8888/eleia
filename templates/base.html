@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>{% block title %}Eleia{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='table.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='phone.css') }}"> -->
+
     <!-- Якщо використовуєш Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
@@ -13,26 +16,32 @@
 <body>
     <header class="header">
         <nav class="navbar navbar-expand-lg navbar-dark background: #768100">
+            <button class="burger" id="burger">☰</button> 
             <img src="{{ url_for('static', filename='images/logo-eleia-2.png') }}" alt="Логотип" width="200">
-            <div class="collapse navbar-collapse">
+            <div class="navbar-links">
+
                 <ul class="navbar-nav mr-auto"> 
                     <nav class="navbar">
+                        
                         <ul class="nav-menu">
+                            
                             <li><a href="{{ url_for('main.index') }}">Головна</a></li>
 
                             <li class="dropdown">
                                 <a href="#">Про заклад ▾</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ url_for('about') }}">Про гімназію</a></li>
-                                    <li><a href="{{ url_for('team') }}">Наш колектив</a></li>
+                                    <li><a href="{{ url_for('about') }}">Презентація гімназії</a></li>
+                                    <li><a href="{{ url_for('team') }}">Вимоги вступу</a></li>
                                 </ul>
                             </li>
 
                             <li class="dropdown">
                                 <a href="#">Навчання ▾</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ url_for('programs') }}">Програми</a></li>
-                                    <li><a href="{{ url_for('admission') }}">Вступ</a></li>
+                                    <li><a href="{{ url_for('first') }}">Початкова школа</a></li>
+                                    <li><a href="{{ url_for('gimnazia') }}">Гімназія</a></li>
+                                    <li><a href="{{ url_for('online') }}">Online навчання</a></li>
+                                    <li><a href="{{ url_for('akademia') }}">ІТ академія</a></li>
                                 </ul>
                             </li>
 
@@ -41,7 +50,106 @@
                     </nav>
                 </ul>
 
-                <!-- Права частина меню -->
+            </div>        
+            <!-- Сайд-меню -->
+            <div class="mobile-menu" id="mobile-menu">
+                <div class="enter-button">
+                    <ul class="navbar-nav ml-auto">
+                        {% if current_user.is_authenticated %}
+                            {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                                <a href="{{ url_for('admin.index') }}" class="btn btn-adm">Адмінка</a>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="btn btn-success" href="{{ url_for('main.profile', user_id=current_user.id) }}">
+                                    Профіль
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn-logout" href="{{ url_for('main.logout') }}">Вийти</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="btn btn-outline-success" href="{{ url_for('main.login') }}">Увійти</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-success" href="{{ url_for('main.register') }}">Зареєструватися</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <ul>
+                    <li><a href="{{ url_for('main.index') }}">Головна</a></li>
+                    <li class="dropdown">
+                        <button class="dropdown-toggle">Навчання </button>
+                        <ul class="dropdown-content">
+                            <li><a href="{{ url_for('first') }}">Початкова школа</a></li>
+                            <li><a href="{{ url_for('gimnazia') }}">Гімназія</a></li>
+                            <li><a href="{{ url_for('online') }}">Online навчання</a></li>
+                            <li><a href="{{ url_for('akademia') }}">IT академія</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <button class="dropdown-toggle">Про заклад </button>
+                        <ul class="dropdown-content">
+                            <li><a href="{{ url_for('about') }}">Презентація гімназії</a></li>
+                            <li><a href="{{ url_for('team') }}">Вимоги вступу</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ url_for('main.blog') }}">Блог</a></li>
+                    <li class="dropdown">
+                        <button class="dropdown-toggle">Контакти</button>
+                        <ul class="dropdown-content">
+                            <p>
+                            Телефон: 
+                            <span class="copy-text" data-copy="+380963976249">
+                                <a href="tel:+380963976249">+38 (096) 397-62-49</a>
+                            </span>
+                            </p>
+
+                            <p>
+                            Email:
+                            <span class="copy-text" data-copy="eleiia.kp@gmail.com">
+                                eleiia.kp@gmail.com
+                            </span>
+                            <br>
+                            <span class="copy-text" data-copy="g-m-v@i.ua">
+                                g-m-v@i.ua
+                            </span>
+                            </p>
+                                <!-- Повідомлення про копіювання -->
+                            <div id="copy-message" class="copy-message">Скопійовано ✅</div>
+                            <div class="social-icons">
+                                <div class="icon">
+                                    <a href="">
+                                        <img src="https://cdn.simpleicons.org/facebook/1877F2" width="30" alt="Facebook">
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="">
+                                        <img src="https://cdn.simpleicons.org/instagram/E4405F" width="30" alt="Instagram">
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="">
+                                        <img src="https://cdn.simpleicons.org/viber/7360F2" width="30" alt="Viber">
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="">
+                                        <img src="https://cdn.simpleicons.org/telegram/26A5E4" width="30" alt="Telegram">
+                                    </a>
+                                </div>
+                            </div>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!-- Права частина меню -->
+            <div class="header-right">
                 <ul class="navbar-nav ml-auto">
                     {% if current_user.is_authenticated %}
                         {% if current_user.is_authenticated and current_user.role == 'admin' %}
@@ -64,8 +172,10 @@
                         </li>
                     {% endif %}
                 </ul>
-
             </div>
+                
+
+            
         </nav>
     </header>
 
@@ -79,44 +189,60 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-section">
-            <img src="{{ url_for('static', filename='logo.png') }}" alt="Логотип" class="footer-logo">
+            <img src="{{ url_for('static', filename='images/logo-eleia-2.png') }}" alt="Логотип" class="footer-logo">
             <p>Кам’янець-Подільська приватна християнська гімназія «ЕЛЕЯ»</p>
             </div>
 
             <div class="footer-section">
             <h4>Про заклад</h4>
             <ul>
-                <li><a href="#">Презентація гімназії</a></li>
-                <li><a href="#">Вимоги вступу</a></li>
+                <li><a href="{{ url_for('about') }}">Презентація гімназії</a></li>
+                <li><a href="{{ url_for('team') }}">Вимоги вступу</a></li>
             </ul>
             <h4>Навчання</h4>
             <ul>
-                <li><a href="#">Початкова школа</a></li>
-                <li><a href="#">Гімназія</a></li>
-                <li><a href="#">Online навчання</a></li>
-                <li><a href="#">IT академія</a></li>
+                <li><a href="{{ url_for('first') }}">Початкова школа</a></li>
+                <li><a href="{{ url_for('gimnazia') }}">Гімназія</a></li>
+                <li><a href="{{ url_for('online') }}">Online навчання</a></li>
+                <li><a href="{{ url_for('akademia') }}">IT академія</a></li>
             </ul>
             </div>
 
             <div class="footer-section">
-            <h4>Контакти</h4>
-            <p>вул. Лесі Українки 85, м. Кам’янець-Подільський<br>Хмельницька область, 32313</p>
-            <p><a href="mailto:eleiia.kp@gmail.com">eleiia.kp@gmail.com</a><br>
-                <a href="mailto:g-m-v@i.ua">g-m-v@i.ua</a></p>
-            <p><a href="tel:+380963976249">+38 096 397 62 49</a></p>
-            <div class="social-icons">
-                <div class="icon"></div>
-                <div class="icon"></div>
-                <div class="icon"></div>
-                <div class="icon"></div>
-            </div>
+                <h4>Контакти</h4>
+                <p>вул. Лесі Українки 85, м. Кам’янець-Подільський<br>Хмельницька область, 32313</p>
+                <p><a href="mailto:eleiia.kp@gmail.com">eleiia.kp@gmail.com</a><br>
+                    <a href="mailto:g-m-v@i.ua">g-m-v@i.ua</a></p>
+                <p><a href="tel:+380963976249">+38 096 397 62 49</a></p>
+                <div class="social-icons">
+                    <div class="icon">
+                        <a href="">
+                            <img src="https://cdn.simpleicons.org/facebook/1877F2" width="40" alt="Facebook">
+                        </a>
+                    </div>
+                    <div class="icon">
+                        <a href="">
+                            <img src="https://cdn.simpleicons.org/instagram/E4405F" width="40" alt="Instagram">
+                        </a>
+                    </div>
+                    <div class="icon">
+                        <a href="">
+                            <img src="https://cdn.simpleicons.org/viber/7360F2" width="40" alt="Viber">
+                        </a>
+                    </div>
+                    <div class="icon">
+                        <a href="">
+                            <img src="https://cdn.simpleicons.org/telegram/26A5E4" width="40" alt="Telegram">
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
-
+    </footer> 
     
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
-       
+
 </body>
     
 </html>

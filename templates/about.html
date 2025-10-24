@@ -55,8 +55,8 @@
     </div>
 </div>
 
-<div class="how-we-works">
-    <div>
+<div class="documents">
+    <div class="main-enter">
         <h1>Як ми навчаємо</h1>
         <p>
             Наше навчання побудоване на поєднанні класичних освітніх основ та сучасних технологій. 
@@ -65,7 +65,7 @@
         </p>
     </div>
     <div class="greed">
-        <div>
+        <div class="step">
             <h2>Сучасне інтегроване навчання</h2>
             <p>
                 Ми об’єднуємо предмети в тематичні блоки, 
@@ -73,14 +73,14 @@
                 Це дозволяє учням краще розуміти матеріал і мислити системно.
             </p>
         </div>
-        <div>
+        <div class="step">
             <h2>Практичні завдання та проєкти</h2>
             <p>
                 Кожна тема супроводжується застосуванням знань на практиці через завдання, 
                 проєкти або досліди. Це допомагає глибше засвоїти матеріал та підвищує інтерес до навчання.
             </p>
         </div>
-        <div>
+        <div class="step">
             <h2>Розвиток критичного мислення</h2>
             <p>
                 Ми навчаємо дітей аналізувати інформацію, 
@@ -88,7 +88,7 @@
                 Це формує навички, необхідні для життя в сучасному світі.
             </p>
         </div>
-        <div>
+        <div class="step">
             <h2>Використання цифрових технологій</h2>
             <p>
                 У навчанні ми активно застосовуємо Google Classroom, 
@@ -96,7 +96,7 @@
                 доступність та актуальність навчального процесу.
             </p>
         </div>
-        <div>
+        <div class="step">
             <h2>Підтримка самостійності та відповідальності</h2>
             <p>
                 Ми вчимо учнів планувати свій час, 
@@ -109,7 +109,7 @@
 
 </div>
 
-<div class="how-enter">
+<!-- <div class="how-enter">
     <div class="enter">
         <div>
             <h1>Як вступити до школи?</h1>
@@ -120,28 +120,28 @@
             </p>
         </div>
         <div class="grid">
-            <div>
+            <div class="step">
                 <h2>Зв’яжіться з нами</h2>
                 <p>
                     Для того, щоб забрати документи зі своєї старої школи, 
                     вам необхідно надати довідку зі школи, в яку ви збираєтеся переходити.
                 </p>
             </div>
-            <div>
+            <div class="step">
                 <h2>Отримайте екскурсію</h2>
                 <p>
                     Ви зможете познайомитися з адміністрацією та вчителями, 
                     а також отримати відповіді на запитання.
                 </p>
             </div>
-            <div>
+            <div class="step">
                 <h2>Пройдіть тестування</h2>
                 <p>
                     Абітурієнт проходе співбесіду, 
                     вхідне тестування та ознайомиться з результатами.
                 </p>
             </div>
-            <div>
+            <div class="step">
                 <h2>Укладіть договір</h2>
                 <p>
                     Примірник договору, заяву, 
@@ -152,7 +152,7 @@
         </div>
     </div>
     
-</div>
+</div> -->
 
 <div class="license">
     <div>
@@ -194,6 +194,7 @@
     display: flex;
     align-items: center; /* центрує по вертикалі */
      gap: 20px; /* відступ між фото і текстом */
+     margin-bottom: 50px;
 }
 
 .welcome img {
@@ -201,130 +202,24 @@
   border-radius: 10px;
 }
 
-/* --- грід для блоків --- */
-.grid {
-  margin-top: 30px;
-
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(1, auto);
-  gap: 10px;
+.mission {
+    box-sizing: border-box;
 }
-
-.grid div {
-  background: white;
-  padding: 20px;
-  text-align: center;
-}
-
-.grid h2 {
-    font-size: large;
-    font-weight: bold;
-    text-align: left;
-}
-
-.grid p {
-    font-size: medium;
+/* .main-enter {
+    padding-left: 360px;
+    padding-right: 360px;
 }
 
 .greed {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, auto);
-  gap: 10px;
+    padding-left: 360px;
+    padding-right: 360px;
 }
+ */
 
-.greed p {
-    font-size: 14px;
+
+h1 {
+  font-weight: 800;
 }
-
-.greed h2 {
-    font-size: large;
-    font-weight: bold;
-    text-align: left;
-}
-
-.how-enter {
-    background-color: rgb(248, 227, 188);
-    width: 100%; /* ширина вікна браузера */
-
-}
-.enter {
-
-    box-sizing: border-box;
-    padding: 20px 20px 40px 20px;
-}
-body {
-  margin: 0;
-  font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f4f4f4;
-  height: 100vh;
-}
-
-.license {
-    margin-bottom: 50px;
-}
-
-.gallery {
-  text-align: center;
-}
-
-.main-photo {
-  position: relative;
-  display: inline-block;
-}
-
-.main-photo img {
-  width: 1000px;
-  height: 800px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.main-photo button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0,0,0,0.5);
-  color: white;
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-  padding: 10px;
-  border-radius: 50%;
-}
-
-.main-photo .prev { left: 10px; }
-.main-photo .next { right: 10px; }
-
-.thumbnails {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.thumbnails img {
-  width: 100px;
-  height: 70px;
-  object-fit: cover;
-  border-radius: 6px;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: 0.3s;
-}
-
-.thumbnails img:hover,
-.thumbnails img.active {
-  opacity: 1;
-  border: 2px solid #3498db;
-}
-
 </style>
 
 <script>

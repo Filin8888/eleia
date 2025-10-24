@@ -31,14 +31,21 @@ def create_app():
     def team():
         return render_template('team.html')
     
-    @app.route('/programs')
-    def programs():
-        return render_template('programs.html')
+    @app.route('/first')
+    def first():
+        return render_template('first.html')
     
-    @app.route('/admission')
-    def admission():
-        return render_template('admission.html')
+    @app.route('/gimnazia')
+    def gimnazia():
+        return render_template('gimnazia.html')
     
+    @app.route('/online')
+    def online():
+        return render_template('online.html')
+    
+    @app.route('/akademia')
+    def akademia():
+        return render_template('akademia.html')
     
 
 
