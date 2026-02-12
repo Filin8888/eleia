@@ -41,8 +41,13 @@ body {
   -webkit-font-smoothing: antialiased; /* згладжування */
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0.8px; /* легкий простір між літерами */
-  font-family: 'Manrope', sans-serif;
 }
+
+body {
+  color: rgb(100, 100, 0);
+}
+
+
 
 
 p {
@@ -562,3 +567,6 @@ nav.navbar {
   opacity: 1;
 }
 
+.documents {
+  display: none;
+}

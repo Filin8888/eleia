@@ -1,11 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for, flash
 from config import Config
 from flask_login import LoginManager
 from extentions import db
 from admin import init_admin
 from flask_migrate import Migrate
-
-
+from email.message import EmailMessage
+import smtplib
+import os
+from models import User
 
 
 login_manager = LoginManager()  # створюємо менеджер логіну
@@ -22,6 +24,45 @@ def create_app():
     # @app.route('/')
     # def index():
     #     return render_template('index.html')
+
+    EMAIL_FROM = os.getenv("EMAIL_FROM")      # твій email
+    EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+    # EMAIL_TO = os.getenv("EMAIL_TO")          # куди приходять заявки
+
+    def send_email(username, contact, message):
+        
+        msg = EmailMessage()
+        msg["Subject"] = "Нова заявка на консультацію"
+        msg["From"] = EMAIL_FROM
+        msg["To"] = "eleiia.kp@gmail.com"
+        msg["Reply-To"] = contact  # 👈 КЛЮЧОВЕ
+
+        msg.set_content(f"""
+                            Імʼя: {username}
+                            Контакт: {contact}
+                            Повідомлення:{message}
+                        """)
+        
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(EMAIL_FROM, EMAIL_PASSWORD)
+            server.send_message(msg)
+
+        if "@" not in contact or "." not in contact:
+            return "Invalid email", 400
+
+    @app.route("/consultation", methods=["GET", "POST"])
+    def consultation():
+        if request.method == "POST":
+            username = request.form["username"]
+            contact = request.form["contact"]
+            message = request.form["message"]
+
+            send_email(username, contact, message)
+
+            flash("Заявку відправлено! Ми звʼяжемось з вами.")
+            return redirect(url_for("consultation"))
+        
+        return render_template("consultation.html")
 
     @app.route('/about')
     def about():

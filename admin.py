@@ -48,7 +48,7 @@ class UserAdminView(SecureModelView):
 
 def init_admin(app):
     # 1️⃣ створюємо екземпляр адмінки
-    admin = Admin(app, name='Admin Panel', template_mode='bootstrap4')
+    admin = Admin(app, name='Admin Panel')
 
     # 2️⃣ додаємо моделі
     admin.add_view(UserAdminView(User, db.session, category="Models"))

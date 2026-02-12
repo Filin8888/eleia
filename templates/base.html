@@ -46,6 +46,10 @@
                             </li>
 
                             <li><a href="{{ url_for('main.blog') }}">Блог</a></li>
+
+                            <a href="/consultation" class="btn btn-outline-dark">
+                                Консультація
+                            </a>
                         </ul>
                     </nav>
                 </ul>
@@ -144,6 +148,9 @@
 
                         </ul>
                     </li>
+                    <a href="/consultation" class="btn btn-outline-dark">
+                        Консультація
+                    </a>
                 </ul>
             </div>
 
@@ -225,7 +232,7 @@
                             <img src="https://cdn.simpleicons.org/instagram/E4405F" width="40" alt="Instagram">
                         </a>
                     </div>
-                    <div class="icon">
+                    <div class="icon" style="display: none;">
                         <a href="">
                             <img src="https://cdn.simpleicons.org/viber/7360F2" width="40" alt="Viber">
                         </a>
@@ -241,6 +248,12 @@
     </footer> 
     
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <style>
+        body{
+            color: olive;
+        }
+    </style>
 
 
 </body>
