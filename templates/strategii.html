@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Стратегії розвитку - Eleia School{% endblock %}
+
+{% block content %}
+<div>
+    <div class="faq">
+
+        <!-- ГРУПА -->
+        <div class="faq-group">
+            <div class="faq-group-title">🔹 ВАКАНСІЇ</div>
+
+            <div class="faq-group-content">
+
+                <!-- ПИТАННЯ -->
+                <div class="faq-item">
+                    <div class="faq-question">ПЕДАГОГІЧНА ІНТЕНРАТУРА</div>
+                    <div class="faq-answer">
+
+                        <img src="{{ url_for('static', filename='images/pedagog.jpg') }}" alt="Vakansii", width="600">
+
+                    </div>
+                </div>
+
+                <!-- <div class="faq-item">
+                    <div class="faq-question">Як зареєструватись?</div>
+                    <div class="faq-answer">Опис...</div>
+                </div> -->
+
+            </div>
+        </div>
+
+        <!-- ЩЕ ГРУПА
+        <div class="faq-group">
+            <div class="faq-group-title">💳 Оплата</div>
+
+            <div class="faq-group-content">
+                <div class="faq-item">
+                    <div class="faq-question">Які способи оплати?</div>
+                    <div class="faq-answer">Опис...</div>
+                </div>
+            </div>
+        </div> -->
+
+    </div>
+</div>
+
+
+{% endblock %}

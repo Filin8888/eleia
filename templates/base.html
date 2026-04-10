@@ -30,8 +30,14 @@
                             <li class="dropdown">
                                 <a href="#">Про заклад ▾</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ url_for('about') }}">Презентація гімназії</a></li>
-                                    <li><a href="{{ url_for('team') }}">Вимоги вступу</a></li>
+                                    <li><a href="{{ url_for('about') }}" title="Презентація гімназії">Презентація гімназії</a></li>
+                                    <li><a href="{{ url_for('team') }}" title="Вимоги вступу">Вимоги вступу</a></li>
+                                    <!-- <li><a href="{{ url_for('methodichka') }}" title="Методична робота">Методична робота</a></li> -->
+                                    <!-- <li><a href="{{ url_for('havchik') }}">Харчування</a></li> -->
+                                    <!-- <li><a href="{{ url_for('prozorist') }}" title="Прозорість та відкритість">Прозорість та відкритість</a></li> -->
+                                    <li><a href="{{ url_for('prava_baza') }}" title="Нормативно - правова база гімназії Елея">Нормативно - правова база гімназії Елея</a></li>
+                                    <!-- <li><a href="{{ url_for('pedagog') }}" title="Адміністрація і педагогічний колектив">Адміністрація і педагогічний колектив</a></li> -->
+                                    <li><a href="{{ url_for('strategii') }}" title="Стратегії розвитку">Стратегії розвитку</a></li>
                                 </ul>
                             </li>
 
@@ -44,6 +50,8 @@
                                     <li><a href="{{ url_for('akademia') }}">ІТ академія</a></li>
                                 </ul>
                             </li>
+
+                            <!-- <li><a href="{{ url_for('pologenia') }}">Положення</a></li> -->
 
                             <li><a href="{{ url_for('main.blog') }}">Блог</a></li>
 
@@ -97,9 +105,17 @@
                         <button class="dropdown-toggle">Про заклад </button>
                         <ul class="dropdown-content">
                             <li><a href="{{ url_for('about') }}">Презентація гімназії</a></li>
+                            <!-- <li><a href="{{ url_for('methodichka') }}">Методична робота</a></li> -->
                             <li><a href="{{ url_for('team') }}">Вимоги вступу</a></li>
+                            <!-- <li><a href="{{ url_for('havchik') }}">Харчування</a></li> -->
+                            <!-- <li><a href="{{ url_for('prozorist') }}">Прозорість та відкритість</a></li> -->
+                            <li><a href="{{ url_for('prava_baza') }}">Нормативно - правова база гімназії Елея</a></li>
+                            <!-- <li><a href="{{ url_for('pedagog') }}">Адміністрація і педагогічний колектив</a></li> -->
+                            <li><a href="{{ url_for('strategii') }}">Стратегії розвитку</a></li>
+                            
                         </ul>
                     </li>
+                    <!-- <li><a href="{{ url_for('pologenia') }}">Положення</a></li> -->
                     <li><a href="{{ url_for('main.blog') }}">Блог</a></li>
                     <li class="dropdown">
                         <button class="dropdown-toggle">Контакти</button>
@@ -205,6 +221,13 @@
             <ul>
                 <li><a href="{{ url_for('about') }}">Презентація гімназії</a></li>
                 <li><a href="{{ url_for('team') }}">Вимоги вступу</a></li>
+                <!-- <li><a href="{{ url_for('methodichka') }}">Методична робота</a></li> -->
+                <!-- <li><a href="{{ url_for('havchik') }}">Харчування</a></li> -->
+                <!-- <li><a href="{{ url_for('prozorist') }}">Прозорість та відкритість</a></li> -->
+                <li><a href="{{ url_for('prava_baza') }}">Нормативно - правова база гімназії Елея</a></li>
+                <!-- <li><a href="{{ url_for('pedagog') }}">Адміністрація і педагогічний колектив</a></li> -->
+                <li><a href="{{ url_for('strategii') }}">Стратегії розвитку</a></li>
+
             </ul>
             <h4>Навчання</h4>
             <ul>
@@ -213,6 +236,8 @@
                 <li><a href="{{ url_for('online') }}">Online навчання</a></li>
                 <li><a href="{{ url_for('akademia') }}">IT академія</a></li>
             </ul>
+
+            <!-- <a href="{{ url_for('pologenia') }}"><h4>Положення</h4></a> -->
             </div>
 
             <div class="footer-section">
@@ -251,6 +276,22 @@
 
     <style>
         body{
+            color: olive;
+        }
+
+        
+        .nav-menu a {
+            display: block;
+            width: 100%;
+
+            white-space: nowrap;      /* один рядок */
+            overflow: hidden;         
+            text-overflow: ellipsis;  /* додає ... */
+
+            padding: 8px;
+        }
+
+        a {
             color: olive;
         }
     </style>

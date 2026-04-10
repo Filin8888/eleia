@@ -88,6 +88,38 @@ def create_app():
     def akademia():
         return render_template('akademia.html')
     
+    @app.route('/methodichka')
+    def methodichka():
+        return render_template('methodichka.html')
+    
+    @app.route('/learn')
+    def learn():
+        return render_template('learn.html')
+    
+    @app.route('/pedagog')
+    def pedagog():
+        return render_template('pedagog.html')
+    
+    @app.route('/havchik')
+    def havchik():
+        return render_template('havchik.html')
+    
+    @app.route('/prozorist')
+    def prozorist():
+        return render_template('prozorist.html')
+    
+    @app.route('/prava_baza')
+    def prava_baza():
+        return render_template('prava_baza.html')
+    
+    @app.route('/strategii')
+    def strategii():
+        return render_template('strategii.html')
+    
+    @app.route('/pologenia')
+    def pologenia():
+        return render_template('pologenia.html')
+    
 
 
     from models import User

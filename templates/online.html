@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Про заклад - Eleia School{% endblock %}
+{% block title %}Online навчання - Eleia School{% endblock %}
 
 {% block content %}
 <div>
@@ -164,7 +164,74 @@
         </div>
         </div>
     </div>
+
+    <h2 class="doc-h2">Дистанційне навчання</h2>
+
+    <div class="docs-list">
+
+        <div class="doc-item">
+            <button class="doc-title">📄 Заява для працівників</button>
+
+            <div class="doc-content">
+                <iframe src="{{ url_for('static', filename='files/workers_doc.pdf') }}"></iframe>
+
+                <div class="doc-actions">
+                    <a href="{{ url_for('static', filename='files/workers_doc.pdf') }}" download>⬇️ Скачати</a>
+                    <a href="{{ url_for('static', filename='files/workers_doc.pdf') }}" target="_blank">👁 Переглянути</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="doc-item">
+            <button class="doc-title">📄 Заява для батьків</button>
+
+            <div class="doc-content">
+                <iframe src="{{ url_for('static', filename='files/parents_doc.pdf') }}"></iframe>
+
+                <div class="doc-actions">
+                    <a href="{{ url_for('static', filename='files/parents_doc.pdf') }}" download>⬇️ Скачати</a>
+                    <a href="{{ url_for('static', filename='files/parents_doc.pdf') }}" target="_blank">👁 Переглянути</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="doc-item">
+            <button class="doc-title">📄 НАКАЗ про дистанційне навчання</button>
+
+            <div class="doc-content">
+                <iframe src="{{ url_for('static', filename='files/online_school_doc.pdf') }}"></iframe>
+
+                <div class="doc-actions">
+                    <a href="{{ url_for('static', filename='files/online_school_doc.pdf') }}" download>⬇️ Скачати</a>
+                    <a href="{{ url_for('static', filename='files/online_school_doc.pdf') }}" target="_blank">👁 Переглянути</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="doc-item">
+            <button class="doc-title">📄 Положення про дистанційне навчання</button>
+
+            <div class="doc-content">
+                <iframe src="{{ url_for('static', filename='files/online_doc.pdf') }}"></iframe>
+
+                <div class="doc-actions">
+                    <a href="{{ url_for('static', filename='files/online_doc.pdf') }}" download>⬇️ Скачати</a>
+                    <a href="{{ url_for('static', filename='files/online_doc.pdf') }}" target="_blank">👁 Переглянути</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
+<style>
+    .doc-h2 {
+        border-bottom: 2px solid olive;
+    }
+</style>
+
+<script>
+    
+</script>
 
 {% endblock %}

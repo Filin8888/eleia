@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Н/П база - Eleia School{% endblock %}
+
+{% block content %}
+<div>
+    <h1 >ЛІЦЕНЗІЯ</h1>
+
+    <div class="docs-list">
+        <div class="doc-item">
+                <button class="doc-title">📄 Ліцензія-1</button>
+
+                <div class="doc-content">
+                    <iframe src="{{ url_for('static', filename='files/ЕЛЕЯ-1.pdf') }}"></iframe>
+
+                    <div class="doc-actions">
+                        <a href="{{ url_for('static', filename='files/ЕЛЕЯ-1.pdf') }}" download>⬇️ Скачати</a>
+                        <a href="{{ url_for('static', filename='files/ЕЛЕЯ-1.pdf') }}" target="_blank">👁 Переглянути</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-item">
+                <button class="doc-title">📄 Ліцензія-2</button>
+
+                <div class="doc-content">
+                    <iframe src="{{ url_for('static', filename='files/Кам_Подільська_приватна_гімназя_Елея_2.pdf') }}"></iframe>
+
+                    <div class="doc-actions">
+                        <a href="{{ url_for('static', filename='files/Кам_Подільська_приватна_гімназя_Елея_2.pdf') }}" download>⬇️ Скачати</a>
+                        <a href="{{ url_for('static', filename='files/Кам_Подільська_приватна_гімназя_Елея_2.pdf') }}" target="_blank">👁 Переглянути</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+<style>
+    h1{
+        border-bottom: 2px solid olive;
+    }
+
+</style>
+
+
+{% endblock %}

@@ -77,3 +77,57 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+
+
+// Документи перегляд
+document.querySelectorAll(".doc-title").forEach(button => {
+    button.addEventListener("click", () => {
+        const content = button.nextElementSibling;
+
+        content.style.display =
+            content.style.display === "block" ? "none" : "block";
+    });
+});
+
+
+// ПІДРОЗДІЛИ
+document.addEventListener("DOMContentLoaded", () => {
+
+    // відкриття груп
+    document.querySelectorAll(".faq-group-title").forEach(group => {
+        group.addEventListener("click", () => {
+            const content = group.nextElementSibling;
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    });
+
+    // відкриття питань
+    document.querySelectorAll(".faq-question").forEach(q => {
+        q.addEventListener("click", (e) => {
+            e.stopPropagation();
+
+            const answer = q.nextElementSibling;
+
+            if (answer.style.maxHeight) {
+                answer.style.maxHeight = null;
+            } else {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            }
+
+            // 🔥 ОНОВЛЮЄМО БАТЬКІВСЬКУ ВИСОТУ
+            const groupContent = q.closest(".faq-group-content");
+            if (groupContent) {
+                setTimeout(() => {
+                    groupContent.style.maxHeight = groupContent.scrollHeight + "px";
+                }, 300); // час анімації
+            }
+        });
+    });
+
+});

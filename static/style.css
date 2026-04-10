@@ -47,9 +47,6 @@ body {
   color: rgb(100, 100, 0);
 }
 
-
-
-
 p {
   line-height: 1.6;
   text-shadow: 0 0 0.5px rgba(0, 0, 0, 0.4);
@@ -569,4 +566,89 @@ nav.navbar {
 
 .documents {
   display: none;
+}
+
+/* Документи */
+.docs-list {
+    max-width: 600px;
+    margin: auto;
+}
+
+.doc-item {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.doc-title {
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    background: #f1f1f1;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.doc-content {
+    display: none;
+    padding: 10px;
+}
+
+.doc-content iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+}
+
+.doc-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.doc-actions a {
+    text-decoration: none;
+    padding: 6px 10px;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+
+
+/* ПІДРОЗДІЛИ */
+.faq-group-title {
+    padding: 15px;
+    background: #ddd;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.faq-group-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+/* питання */
+.faq-question {
+    padding: 10px 20px;
+    cursor: pointer;
+    background: #f8f9fa;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    transition: max-height 0.3s ease;
+}
+
+.faq-answer img {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.faq-answer img:hover {
+    transform: scale(1.05);
 }
